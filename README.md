@@ -26,22 +26,22 @@ Methods:
 - Update -> collaborates with Cell. Updates cell attributes based on hit/miss
 - Hit_or_miss -> collaborates with Cell. Checks whether player has scored a hit or a miss on the grid
 
-
 Player
--------------
-The first responsibility of the player is to deploy their ships to the grid. This should be done by giving the grid references of the cells occupied by the ships. 
+--------
+Methods: 
+- Deploy ships to the grid. This should be done by giving the grid references of the cells occupied by the ships. 
+- Attck the grid. This is done by declaring the grid reference of the cell that it would like to attack. 
 
-The second responsibility of the player is to attack the grid, by declaring the grid reference of the cell that it would like to attack. 
-
-Each player possess two grids. 
+Attribues:
+- Each player possess two grids. 
 (We anticipate that this might change, as the tracking grid is the same as the primary grid of the opposing player, minus the ships that have been deployed.)
 
 Cell
 ---- 
 Upon initialisation a cell should:
-> A grid reference
-> Each cell has a grid reference.
+- A grid reference
+- Each cell has a grid reference.
 
 Each cell should know whether:
-> it has been previously attacked or not
-> it is occupied or empty.  
+- it has been previously attacked or not
+- it is occupied or empty.  
