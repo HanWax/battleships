@@ -44,4 +44,20 @@ Upon initialisation a cell should:
 
 Each cell should know whether:
 - it has been previously attacked or not
-- it is occupied or empty.  
+- it is occupied or empty. 
+
+Game
+----
+Upon start of the game:
+- it should make 2 players
+- it should make 4 grids
+- it should make 10 tests
+- it should instructions for deployment
+
+Round n:
+- it should start the game
+- it should set turns
+- it should declare victory
+- it should end the game
+
+
