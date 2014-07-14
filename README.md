@@ -60,4 +60,18 @@ Round n:
 - it should declare victory
 - it should end the game
 
+Ship
+----
+Ships are created by the Game and deployed to the Grid by the Players.
 
+Attributes:
+
+- size(how many cells)
+- location(which cells it occupies)
+- name(e.g. aircraft carrier)
+
+A ship should know:
+
+- if it has been hit 
+- how many times it has been hit
+- if it has been sunk or not
