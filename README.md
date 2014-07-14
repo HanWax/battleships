@@ -12,4 +12,4 @@ The first responsibility of the player is to deploy their ships to the grid. Thi
 The second responsibility of the player is to attack the grid, by declaring the grid reference of the cell that it would like to attack. 
 
 Each player possess two grids. 
-#We anticipate that this might change, as the tracking grid is the same as the primary grid of the opposing player, minus the ships that have been deployed.  
+(We anticipate that this might change, as the tracking grid is the same as the primary grid of the opposing player, minus the ships that have been deployed.)  
