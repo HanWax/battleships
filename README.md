@@ -59,7 +59,6 @@ Round n:
 - it should set turns
 - it should declare victory
 - it should end the game
-=======
 
 Ship
 ----
