@@ -3,7 +3,7 @@ class Cell
 	def initialize
 		@occupied = false
 		@attacked = false
-		@has_reference = true
+		@grid_reference = :zz11
 	end
 
 	def occupied?
@@ -21,11 +21,12 @@ class Cell
 
 	def attack!
 		@attacked = true
-		self
+		return 'hit' if occupied?
+		'miss'
 	end
 
-	def has_reference?
-		@has_reference == true
+	def grid_reference
+		@grid_reference = :zz11
 	end
 
 end
