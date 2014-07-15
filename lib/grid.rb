@@ -5,6 +5,7 @@ class Grid
 	DEFAULT_SIZE = 10
 
 	attr_reader :size
+	attr_accessor :cells
 
 	def initialize(options = {})
 		@size = options.fetch(:size, DEFAULT_SIZE)
@@ -13,33 +14,23 @@ class Grid
 
 	#Context: cells in the grid
 
-	def cells
-		@cells ||= []
-	end
-
 	def create_cells
-		for column in ('a'..last_letter)
-			for row in (1..size)
-				update_cell_array_with(Cell.new(grid_reference: create_cell_reference(column, row)))
-			end
-		end	
-		cells
+		Array.new(size) {Array.new(size, Cell.new)}
 	end
 
-	def update_cell_array_with(cell)
-		cells << cell
-  end
-
-	def create_cell_reference(column, row)
-		(column + row.to_s).to_sym
+	def attack_cell(grid_reference)
+		x, y = grid_reference_to_index(grid_reference)
+		cells[x][y] = cells[x][y].attack!
 	end
 
-	def last_letter
-		('a'..'z').to_a[size-1]
-	end
+	def grid_reference_to_index(grid_reference)
+		y = to_number(grid_reference[0]).to_i
+		x = grid_reference[1].to_i - 1
+		[x, y]
+	end	
 
-	def cell(grid_reference)
-		cells.select { |cell| cell.grid_reference == grid_reference }.first
+	def to_number(letter)
+		('a'..'z').to_a.index(letter)
 	end
 
 	#Context: ships in the grid
@@ -57,4 +48,6 @@ class Grid
 	end
 
 end
+
+
 

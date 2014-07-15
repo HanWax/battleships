@@ -1,13 +1,13 @@
-require 'water'
+require './lib/water'
+require './lib/hit_cell'
 
 class Cell
 
 	DEFAULT_REFERENCE = nil
-	attr_accessor :grid_reference
+
 	attr_accessor :occupier
 
 	def initialize(options = {})
-		@grid_reference = options.fetch(:grid_reference, DEFAULT_REFERENCE)
 		@occupier = Water.new 
 	end
 
