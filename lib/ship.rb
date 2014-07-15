@@ -2,15 +2,11 @@ class Ship
 
 	DEFAULT_LENGTH = 3
 	attr_reader	:length
+	attr_accessor :location
 
 	def initialize(options = {})
 		@length = options.fetch(:length, DEFAULT_LENGTH)
 		@sunk = false
-		@location = []
-	end
-
-	def length
-		@length
 	end
 
 	def sunk?
@@ -21,9 +17,37 @@ class Ship
 	 	@sunk = true
 	 	self
 	end
+end
 
-	def location 
-		@location ||= [] 
-	end 
 
+
+# below are the types of ships that are deployed
+# these are sub-classes of the ship (super)class
+
+class AircraftCarrier < Ship
+	def initialize
+		super(length: 5)
+	end
+end
+
+
+class Battleship < Ship
+	def initialize
+		super(length: 4)
+	end
+end
+
+
+class Submarine < Ship
+end
+
+
+class Destroyer < Ship
+end
+
+
+class PatrolBoat < Ship
+	def initialize
+		super(length: 2)
+	end
 end
