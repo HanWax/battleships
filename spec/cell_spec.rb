@@ -28,7 +28,7 @@ describe 'cell' do
 	end
 
 	it 'has a grid reference when created' do
-		expect(cell.grid_reference).to eq (:zz11)
+		expect(cell.grid_reference).to eq Cell::DEFAULT_REFERENCE
 	end
 
 end

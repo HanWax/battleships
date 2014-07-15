@@ -1,9 +1,12 @@
 class Cell
 
-	def initialize
+	DEFAULT_REFERENCE = nil
+	attr_accessor :grid_reference
+
+	def initialize(options = {})
+		@grid_reference = options.fetch(:grid_reference, DEFAULT_REFERENCE)
 		@occupied = false
 		@attacked = false
-		@grid_reference = :zz11
 	end
 
 	def occupied?
@@ -23,10 +26,6 @@ class Cell
 		@attacked = true
 		return 'hit' if occupied?
 		'miss'
-	end
-
-	def grid_reference
-		@grid_reference = :zz11
 	end
 
 end
