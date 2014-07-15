@@ -11,7 +11,13 @@ describe 'cell' do
 	it 'can be occupied by a ship' do
 		cell.occupy_with(:ship)
 		expect(cell).to be_occupied 
+		expect(cell.occupier).to eq(:ship)
 	end
+
+	it 'hits the occupier when the cell is hit' do 
+		expect(cell.occupier).to receive(:attack!)
+		cell.attack!
+	end 
 
 	it 'can register hit' do
 		expect(cell.attack!).to be_an_instance_of HitCell
