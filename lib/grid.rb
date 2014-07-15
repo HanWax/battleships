@@ -15,10 +15,28 @@ class Grid
 		@cells ||= []
 	end
 
+
 	def create_cells
-		(size**2).times { cells << Cell.new }
+		for column in ('a'..last_letter)
+			for row in (1..size)
+				update_cell_array_with(Cell.new(grid_reference: create_cell_reference(column, row)))
+			end
+		end	
 		cells
 	end
+
+	def update_cell_array_with(cell)
+		cells << cell
+  end
+
+	def create_cell_reference(column, row)
+		(column + row.to_s).to_sym
+	end
+
+	def last_letter
+		('a'..'z').to_a[size-1]
+	end
+
 
 end
 
