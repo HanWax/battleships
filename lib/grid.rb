@@ -15,7 +15,6 @@ class Grid
 		@cells ||= []
 	end
 
-
 	def create_cells
 		for column in ('a'..last_letter)
 			for row in (1..size)
@@ -37,6 +36,9 @@ class Grid
 		('a'..'z').to_a[size-1]
 	end
 
+	def cell(grid_reference)
+		cells.select { |cell| cell.grid_reference == grid_reference }.first
+	end
 
 end
 

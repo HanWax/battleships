@@ -38,6 +38,11 @@ describe Grid do
 			expect(grid.cells).to eq grid.cells.uniq
 		end
 
+		it 'should be able to return a specific cell by reference' do
+			expect(grid.cell(:a1)).to eq grid.cells.first
+			expect(grid.cell(:j10)).to eq grid.cells.last
+		end
+
 	end
 
 end
