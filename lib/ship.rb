@@ -17,8 +17,20 @@ class Ship
 	 	@sunk = true
 	 	self
 	end
-end
 
+	def attack!
+		@shield_level -= 1
+		return sink! if @shield_level <= 0
+		self
+	end
+
+	def deploy_to(grid, coordinates)
+		coordinates.each do |coordinate|
+			grid.cell(coordinate).occupier = self
+		end
+	end
+
+end
 
 
 # below are the types of ships that are deployed
