@@ -1,11 +1,11 @@
 class Ship
 
-	DEFAULT_LENGTH = 3
-	attr_reader	:length
-	attr_accessor :location
+	DEFAULT_SHIELD_LEVEL = 3
+
+	attr_accessor	:shield_level
 
 	def initialize(options = {})
-		@length = options.fetch(:length, DEFAULT_LENGTH)
+		@shield_level = options.fetch(:shield_level, DEFAULT_SHIELD_LEVEL)
 		@sunk = false
 	end
 
@@ -26,14 +26,14 @@ end
 
 class AircraftCarrier < Ship
 	def initialize
-		super(length: 5)
+		super(shield_level: 5)
 	end
 end
 
 
 class Battleship < Ship
 	def initialize
-		super(length: 4)
+		super(shield_level: 4)
 	end
 end
 
@@ -48,6 +48,6 @@ end
 
 class PatrolBoat < Ship
 	def initialize
-		super(length: 2)
+		super(shield_level: 2)
 	end
 end
