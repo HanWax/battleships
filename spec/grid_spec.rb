@@ -2,9 +2,11 @@ require 'grid'
 
 describe Grid do
 
-	let(:grid) { Grid.new}
+	let(:grid) 				{ Grid.new													}
+	let(:ship) 				{ double :ship 											}
+	let(:sunken_ship) { double :sunken_ship, sunk?: true 	}
 
-	context 'Grid size:' do
+	context 'Size:' do
 
 		it 'should have a default size of 10' do
 			expect(grid.size).to eq Grid::DEFAULT_SIZE
@@ -18,11 +20,11 @@ describe Grid do
 
 	context 'Cells in grid:' do
 
-		it 'can hold cells' do
+		it 'should hold cells' do
 			expect(grid.cells.is_a?(Array)).to be true
 		end
 
-		it 'holds size x size number of cells on initialization' do
+		it 'should hold size x size number of cells on initialization' do
 			expect(grid.cells.count).to eq grid.size**2
 		end
 
@@ -41,6 +43,28 @@ describe Grid do
 		it 'should be able to return a specific cell by reference' do
 			expect(grid.cell(:a1)).to eq grid.cells.first
 			expect(grid.cell(:j10)).to eq grid.cells.last
+		end
+
+	end
+
+	context 'Ships in the grid:' do
+
+		it 'it can hold ships' do
+			expect(grid.ships.is_a?(Array)).to be true
+		end
+
+		it 'should have no ships initially' do
+			expect(grid.ships).to be_empty
+		end
+
+		it 'a ship can be added' do
+			grid.add_ship(ship)
+			expect(grid.ships).not_to be_empty
+		end
+
+		it 'it can count sunk ships' do
+			grid.add_ship(sunken_ship)
+			expect(grid.count_sunken_ships).to be 1
 		end
 
 	end

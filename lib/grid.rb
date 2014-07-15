@@ -11,6 +11,8 @@ class Grid
 		@cells = create_cells
 	end
 
+	#Context: cells in the grid
+
 	def cells
 		@cells ||= []
 	end
@@ -38,6 +40,20 @@ class Grid
 
 	def cell(grid_reference)
 		cells.select { |cell| cell.grid_reference == grid_reference }.first
+	end
+
+	#Context: ships in the grid
+
+	def ships
+		@ships ||= []
+	end
+
+	def add_ship(ship)
+		ships << ship
+	end
+
+	def count_sunken_ships
+		ships.select(&:sunk?).count
 	end
 
 end
