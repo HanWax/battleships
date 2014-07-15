@@ -1,31 +1,27 @@
+require 'water'
+
 class Cell
 
 	DEFAULT_REFERENCE = nil
 	attr_accessor :grid_reference
+	attr_accessor :occupier
 
 	def initialize(options = {})
 		@grid_reference = options.fetch(:grid_reference, DEFAULT_REFERENCE)
-		@occupied = false
-		@attacked = false
+		@occupier = Water.new 
 	end
 
 	def occupied?
-		@occupied == true
+		!@occupier.is_a?(Water)
 	end
 
-	def occupy!
-		@occupied = true
+	def occupy_with(ship)
+		@occupier = ship
 		self
 	end
 
-	def attacked?
-		@attacked == true
-	end
-
 	def attack!
-		@attacked = true
-		return 'hit' if occupied?
-		'miss'
+		@occupier.attack!
+		return HitCell.new
 	end
-
 end

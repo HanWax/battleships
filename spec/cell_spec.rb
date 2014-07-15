@@ -2,29 +2,19 @@ require 'cell'
 
 describe 'cell' do
 
-	let(:cell) 				{ Cell.new}
-	let(:occupied_cell)		{ Cell.new.occupy! }
+	let(:cell) 				{ Cell.new         }
 
 	it 'should not be occupied when created' do
 		expect(cell).not_to be_occupied
 	end
 
-	it 'can be occupied' do
-		cell.occupy!
-		expect(cell).to be_occupied
-	end
-
-	it 'should not have been attacked when created' do
-		expect(cell).not_to be_attacked
-	end
-
-	it 'can be attacked' do
-		cell.attack!
-		expect(cell).to be_attacked
+	it 'can be occupied by a ship' do
+		cell.occupy_with(:ship)
+		expect(cell).to be_occupied 
 	end
 
 	it 'can register hit' do
-		expect(occupied_cell.attack!).to eq 'hit' 
+		expect(cell.attack!).to be_an_instance_of HitCell
 	end
 
 	it 'has a grid reference when created' do

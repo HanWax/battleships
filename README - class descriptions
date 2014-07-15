@@ -1,0 +1,9 @@
+
+
+Cell
+---- 
+
+Methods: 
+Upon initialisation a cell should:
+- A grid reference
+- Each cell has a grid reference.
