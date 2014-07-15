@@ -26,12 +26,11 @@ class Ship
 
 	def deploy_to(grid, coordinates)
 		coordinates.each do |coordinate|
-			grid.cell(coordinate).occupier = self
+			grid.cell(coordinate).occupy_with(self)
 		end
 	end
 
 end
-
 
 # below are the types of ships that are deployed
 # these are sub-classes of the ship (super)class
@@ -42,21 +41,17 @@ class AircraftCarrier < Ship
 	end
 end
 
-
 class Battleship < Ship
 	def initialize
 		super(shield_level: 4)
 	end
 end
 
-
 class Submarine < Ship
 end
 
-
 class Destroyer < Ship
 end
-
 
 class PatrolBoat < Ship
 	def initialize

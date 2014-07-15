@@ -5,6 +5,7 @@ describe Grid do
 	let(:grid) 				{ Grid.new													}
 	let(:ship) 				{ double :ship 											}
 	let(:sunken_ship) { double :sunken_ship, sunk?: true 	}
+	let(:cell)				{ double :cell, attack!: cell 			}
 
 	context 'Size:' do
 
@@ -25,24 +26,17 @@ describe Grid do
 		end
 
 		it 'should hold size x size number of cells on initialization' do
-			expect(grid.cells.count).to eq grid.size**2
-		end
-
-		it 'should give the first cell grid reference a1' do
-			expect(grid.cells.first.grid_reference).to eq :a1
-		end
-
-		it 'should give the last cell in size 10 grid, grid reference j10' do
-			expect(grid.cells.last.grid_reference).to eq :j10
-		end
-		
-		it 'should give all cells unique grid references' do
-			expect(grid.cells).to eq grid.cells.uniq
+			expect(grid.cell_count).to eq grid.size**2
 		end
 
 		it 'should be able to return a specific cell by reference' do
-			expect(grid.cell(:a1)).to eq grid.cells.first
-			expect(grid.cell(:j10)).to eq grid.cells.last
+			expect(grid.cell(:a1)).to eq grid.cells[0][0]
+			expect(grid.cell(:j10)).to eq grid.cells[9][9]
+		end
+
+		it 'should be able to be attacked' do
+			expect(grid.cell(:a1)).to receive(:attack!)
+			grid.attack_cell(:a1)
 		end
 
 	end

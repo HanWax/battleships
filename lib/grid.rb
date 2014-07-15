@@ -15,7 +15,12 @@ class Grid
 	#Context: cells in the grid
 
 	def create_cells
-		Array.new(size) {Array.new(size, Cell.new)}
+		Array.new(size) { Array.new(size) { Cell.new} }
+	end
+
+	def cell(grid_reference)
+		x, y = grid_reference_to_index(grid_reference)
+		cells[x][y]
 	end
 
 	def attack_cell(grid_reference)
@@ -23,14 +28,8 @@ class Grid
 		cells[x][y] = cells[x][y].attack!
 	end
 
-	def grid_reference_to_index(grid_reference)
-		y = to_number(grid_reference[0]).to_i
-		x = grid_reference[1].to_i - 1
-		[x, y]
-	end	
-
-	def to_number(letter)
-		('a'..'z').to_a.index(letter)
+	def cell_count
+		@cells.flatten.count
 	end
 
 	#Context: ships in the grid
@@ -47,6 +46,16 @@ class Grid
 		ships.select(&:sunk?).count
 	end
 
+end
+
+def grid_reference_to_index(grid_reference)
+	y = to_number(grid_reference[0]).to_i
+	x = grid_reference[1..2].to_i - 1
+	[x, y]
+end	
+
+def to_number(letter)
+	('a'..'z').to_a.index(letter)
 end
 
 

@@ -24,4 +24,5 @@ class Cell
 		@occupier.attack!
 		return HitCell.new
 	end
+	
 end
