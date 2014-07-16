@@ -6,8 +6,8 @@ class Ship
 
 	attr_accessor	:shield_level
 
-	def initialize(options = {})
-		@shield_level = options.fetch(:shield_level, DEFAULT_SHIELD_LEVEL)
+	def initialize(shield_level = DEFAULT_SHIELD_LEVEL)
+		@shield_level = shield_level
 		@sunk = false
 	end
 
@@ -40,13 +40,13 @@ end
 
 class AircraftCarrier < Ship
 	def initialize
-		super(shield_level: 5)
+		super(5)
 	end
 end
 
 class Battleship < Ship
 	def initialize
-		super(shield_level: 4)
+		super(4)
 	end
 end
 
@@ -58,6 +58,6 @@ end
 
 class PatrolBoat < Ship
 	def initialize
-		super(shield_level: 2)
+		super(2)
 	end
 end

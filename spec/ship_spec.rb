@@ -3,7 +3,7 @@ require 'ship'
 shared_examples 'ship' do
 
 let(:ship)			{ Ship.new 														}
-let(:weak_ship)     { Ship.new(shield_level: 1) 					}
+let(:weak_ship) { Ship.new(1) 												}
 let(:cell)			{ double :cell, :occupy_with => nil 	}
 let(:grid)			{ double :grid, :cell => cell 				}
 
@@ -14,11 +14,11 @@ context ''
 	end
 
 	it 'should have a shield_level' do
-		expect(ship.shield_level).to eq 3
+		expect(ship.shield_level).to eq Ship::DEFAULT_SHIELD_LEVEL
 	end
 
 	it 'shield_level can be set when created' do
-		expect(ship.shield_level).to eq Ship::DEFAULT_SHIELD_LEVEL
+		expect(weak_ship.shield_level).to eq 1
 	end
 
 	it 'should know if it\'s been sunk' do 

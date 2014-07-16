@@ -22,7 +22,7 @@ class Cell
 	end
 
 	def attack!
-		@occupier.attack!
+		@occupier = occupier.attack!
 		return AttackedCell.new
 	end
 	
