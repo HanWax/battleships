@@ -11,10 +11,16 @@ describe Game do
 			expect(game.players[1]).to be_an_instance_of Player
 		end
 		
-		xit 'can make ships' do
+		it 'can make an array of ships' do
+			expect(game.ship_factory).to be_an_instance_of Array
 		end
 
-		xit 'can make grits' do
+		it 'can fill the array with ships' do
+			expect(game.ship_factory[0]).to be_an_instance_of AircraftCarrier
+			expect(game.ship_factory[1]).to be_an_instance_of Battleship
+			expect(game.ship_factory[2]).to be_an_instance_of Destroyer
+			expect(game.ship_factory[3]).to be_an_instance_of Submarine
+			expect(game.ship_factory[4]).to be_an_instance_of PatrolBoat
 		end
 
 		xit 'can give instruction for deployment' do 
@@ -30,7 +36,11 @@ describe Game do
 		xit 'can set turns' do
 		end
 
-		xit 'can declare victory' do
+		it 'can declare victory' do
+			player1 = double :player1, :count_sunken_ships => 5
+			player2 = double :player2, :count_sunken_ships => 0
+			game.players = [player1, player2]
+			expect(game.declare_victory).to eq "player2 wins!"
 		end
 
 		xit 'can end the game' do

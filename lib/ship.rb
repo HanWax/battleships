@@ -21,15 +21,15 @@ class Ship
 	end
 
 	def attack!
-		@shield_level -= 1
-		return sink! if @shield_level <= 0
+		@shield_level = [@shield_level - 1, 0].max
+		return sink! if @shield_level == 0
 		self
 	end
 
 	def deploy_to(grid, coordinates)
+		grid.add_ship(self) 
 		coordinates.each do |coordinate|
 			grid.cell(coordinate).occupy_with(self)
-			grid.add_ship(self) 
 		end
 	end
 
