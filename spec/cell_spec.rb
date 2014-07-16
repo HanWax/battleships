@@ -3,8 +3,9 @@ require 'ship'
 
 describe 'cell' do
 
-	let(:cell) 				{ Cell.new                }
-	let(:occupied_cell)     { cell.occupy_with(:ship)  }
+	let(:cell) 							{ Cell.new                						}
+	let(:ship)							{ double :ship, :attack! => nil				}
+	let(:occupied_cell)     { cell.occupy_with(ship)							}
 
 	it 'should not be occupied when created' do
 		expect(cell).not_to be_occupied
@@ -21,8 +22,12 @@ describe 'cell' do
 		cell.attack!
 	end 
 
+	it 'can register miss' do
+		expect(cell.attack!).to be_an_instance_of Miss
+	end
+
 	it 'can register hit' do
-		expect(cell.attack!).to be_an_instance_of AttackedCell
+		expect(occupied_cell.attack!).to be_an_instance_of Hit
 	end
 
 	it 'should display ~ if occupied by water' do
