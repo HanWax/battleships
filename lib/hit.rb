@@ -1,4 +1,4 @@
-class Hit < HitCell
+class Hit < AttackedCell
 
 def display 
 	"X"

@@ -3,7 +3,7 @@ require 'ship'
 shared_examples 'ship' do
 
 let(:ship)			{ Ship.new 														}
-let(:weak_ship) { Ship.new(shield_level: 1) 					}
+let(:weak_ship)     { Ship.new(shield_level: 1) 					}
 let(:cell)			{ double :cell, :occupy_with => nil 	}
 let(:grid)			{ double :grid, :cell => cell 				}
 

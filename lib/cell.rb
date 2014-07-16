@@ -1,5 +1,5 @@
 require './lib/water'
-require './lib/hit_cell'
+require './lib/attacked_cell'
 require './lib/ship'
 
 class Cell
@@ -23,7 +23,7 @@ class Cell
 
 	def attack!
 		@occupier.attack!
-		return HitCell.new
+		return AttackedCell.new
 	end
 	
 	def display

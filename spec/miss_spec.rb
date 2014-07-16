@@ -1,6 +1,6 @@
 require 'miss'
 
-describe 'miss' do
+describe Miss do
 	
 	it 'should return O when player attacked water' do
 		miss = Miss.new

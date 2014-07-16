@@ -5,7 +5,7 @@ describe Grid do
 	let(:grid) 				{ Grid.new													}
 	let(:ship) 				{ double :ship 											}
 	let(:sunken_ship) { double :sunken_ship, sunk?: true 	}
-	let(:cell)				{ double :cell, attack!: cell 			}
+	let(:cell)				{ double :cell, attack!: cell   }
 
 	context 'Size:' do
 

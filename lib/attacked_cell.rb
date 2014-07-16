@@ -1,4 +1,4 @@
-class HitCell
+class AttackedCell
 
 	def attack!
 		raise 'This cell has already been attacked. Try again.'

@@ -1,6 +1,6 @@
 require 'hit'
 
-describe 'hit' do 
+describe Hit do 
 
 	it 'should return X when player atacked ship' do
 		hit = Hit.new

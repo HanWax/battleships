@@ -1,4 +1,4 @@
-class Miss < HitCell
+class Miss < AttackedCell
 
 	def display
 	"O"
