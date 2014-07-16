@@ -1,14 +1,15 @@
 require 'player'
 
+
 	describe Player do 
-		it "doesn't have a grid when created" do 
-			player = Player.new
-			expect(player.grid).to be_empty
+
+		let(:player) {Player.new}
+
+		it "should have a grid when created" do 
+			expect(player.grid.is_a?(Grid)).to be true
 		end
 
-		it "player can have a grid" do 
-			player = Player.new
-			player.grid
-			expect(player.grid).not_to be_empty
-		end
+		# it "should tell the ship where to deploy to" do 
+		# 	expect(player.instruct_deployment).to eq [:a1. :b1, :c1]
+		# end 
 	end 
