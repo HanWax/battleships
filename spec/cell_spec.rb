@@ -1,8 +1,11 @@
 require 'cell'
+require 'ship'
 
 describe 'cell' do
 
-	let(:cell) 				{ Cell.new         }
+	let(:cell) 				{ Cell.new                }
+	let(:ship)              { double :ship            }
+	let(:occupied_cell)     { cell.occupy_with(ship)  }
 
 	it 'should not be occupied when created' do
 		expect(cell).not_to be_occupied
@@ -23,8 +26,12 @@ describe 'cell' do
 		expect(cell.attack!).to be_an_instance_of HitCell
 	end
 
-	it 'has a grid reference when created' do
-		expect(cell.grid_reference).to eq Cell::DEFAULT_REFERENCE
+	it 'should display ~ if occupied by water' do
+		expect(cell.display).to eq('~')
+	end
+
+	it 'should display @ if occupied by a ship' do
+		expect(occupied_cell.display).to eq('@') 
 	end
 
 end

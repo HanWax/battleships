@@ -1,3 +1,5 @@
+require './lib/grid'
+
 class Ship
 
 	DEFAULT_SHIELD_LEVEL = 3
@@ -27,6 +29,7 @@ class Ship
 	def deploy_to(grid, coordinates)
 		coordinates.each do |coordinate|
 			grid.cell(coordinate).occupy_with(self)
+			@add_ship 
 		end
 	end
 

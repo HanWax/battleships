@@ -1,5 +1,6 @@
 require './lib/water'
 require './lib/hit_cell'
+require './lib/ship'
 
 class Cell
 
@@ -7,7 +8,7 @@ class Cell
 
 	attr_accessor :occupier
 
-	def initialize(options = {})
+	def initialize
 		@occupier = Water.new 
 	end
 
@@ -25,4 +26,8 @@ class Cell
 		return HitCell.new
 	end
 	
+	def display
+		return '@' if occupied? 
+		'~'
+	end
 end
