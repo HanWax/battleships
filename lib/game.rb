@@ -22,7 +22,8 @@ class Game
 	end
 
 	def declare_victory
-		
+		return "player2 wins!" if players[0].grid.count_sunken_ships == 5
+		return "player1 wins!" if players[1].grid.count_sunken_ships == 5
 	end
 
 end

@@ -37,8 +37,10 @@ describe Game do
 		end
 
 		it 'can declare victory' do
-			player1 = double :player1, :count_sunken_ships => 5
-			player2 = double :player2, :count_sunken_ships => 0
+			grid1 = double :grid1, :count_sunken_ships => 5
+			grid2 = double :grid2, :count_sunken_ships => 0
+			player1 = double :player1, :grid => grid1
+			player2 = double :player2, :grid => grid2
 			game.players = [player1, player2]
 			expect(game.declare_victory).to eq "player2 wins!"
 		end
