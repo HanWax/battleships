@@ -2,10 +2,10 @@ require 'ship'
 
 shared_examples 'ship' do
 
-let(:ship)			{ Ship.new 														}
-let(:weak_ship) { Ship.new(1) 												}
+let(:ship)			{ Ship.new 								}
+let(:weak_ship)     { Ship.new(1) 							}
 let(:cell)			{ double :cell, :occupy_with => nil 	}
-let(:grid)			{ double :grid, :cell => cell 				}
+let(:grid)			{ double :grid, :cell => cell 			}
 
 context ''
 
