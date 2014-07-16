@@ -1,6 +1,8 @@
 require './lib/water'
 require './lib/attacked_cell'
-require './lib/ship'
+require './lib/hit'
+require './lib/miss'
+
 
 class Cell
 
@@ -22,8 +24,9 @@ class Cell
 	end
 
 	def attack!
-		@occupier = occupier.attack!
-		return AttackedCell.new
+		@occupier.attack!
+		return Hit.new if occupied?
+		Miss.new
 	end
 	
 	def display

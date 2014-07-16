@@ -25,7 +25,7 @@ class Grid
 
 	def attack_cell(grid_reference)
 		x, y = grid_reference_to_index(grid_reference)
-		cells[x][y].attack!
+		cells[x][y] = cells[x][y].attack!
 	end
 
 	def cell_count

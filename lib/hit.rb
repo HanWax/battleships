@@ -1,3 +1,5 @@
+require './lib/attacked_cell'
+
 class Hit < AttackedCell
 
 def display 
