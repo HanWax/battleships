@@ -8,7 +8,12 @@ class Player
 		@grid = Grid.new(size: 10)
 	end
 
-	def instruct_deployment
+	def place(ship, at_coordinates)
+		ship.deploy_to(at_coordinates)	
+	end	
+
+	def shoot_at(opponent_grid, at_coordinate)
+		opponent_grid.attack_cell(at_coordinate)
 	end
 
 end
