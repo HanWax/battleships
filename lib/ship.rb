@@ -29,7 +29,7 @@ class Ship
 	def deploy_to(grid, coordinates)
 		coordinates.each do |coordinate|
 			grid.cell(coordinate).occupy_with(self)
-			@add_ship 
+			grid.add_ship(self) 
 		end
 	end
 

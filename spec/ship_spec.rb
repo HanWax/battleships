@@ -2,10 +2,10 @@ require 'ship'
 
 shared_examples 'ship' do
 
-let(:ship)			{ Ship.new 								}
-let(:weak_ship)     { Ship.new(1) 							}
-let(:cell)			{ double :cell, :occupy_with => nil 	}
-let(:grid)			{ double :grid, :cell => cell 			}
+let(:ship)			{ Ship.new 																			}
+let(:weak_ship) { Ship.new(1) 																	}
+let(:cell)			{ double :cell, :occupy_with => nil 						}
+let(:grid)			{ double :grid, :cell => cell, :add_ship => nil }
 
 context ''
 
@@ -44,6 +44,12 @@ context ''
 	it 'should deploy a ship to a given set of grid coordinates' do
 		expect(cell).to receive(:occupy_with).with(ship).exactly(3).times
 		ship.deploy_to(grid, [:a1, :a2, :a3]) 
+	end
+
+	it 'a deployed ship should be in the grid' do
+		allow(cell).to receive(:occupy_with).with(weak_ship)
+		expect(grid).to receive(:add_ship).with(weak_ship)
+		weak_ship.deploy_to(grid, [:a1]) 
 	end
 
 end
