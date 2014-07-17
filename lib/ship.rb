@@ -17,6 +17,7 @@ class Ship
 
 	def sink!
 	 	@sunk = true
+	 	puts "Sunk #{self.class}!"
 	 	self
 	end
 

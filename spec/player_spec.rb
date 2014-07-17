@@ -45,6 +45,7 @@ require 'player'
 			expect(catharinas_grid).to receive(:attack_cell).with(at_coordinate)
 			hannah.shoot_at(catharinas_grid, at_coordinate)
 		end
+
 	end
 
 	context 'requesting coordinates' do
