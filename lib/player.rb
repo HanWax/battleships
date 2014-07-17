@@ -8,7 +8,13 @@ class Player
 		@grid = Grid.new(size: 10)
 	end
 
-	def place(ship, at_coordinates = get_user_input)
+	def deploy_ships(ships)
+		ships.each do |ship| 
+			deploy(ship, request_coordinate_to_place(ship))
+		end
+	end
+
+	def deploy(ship, at_coordinates)
 		ship.deploy_to(grid, at_coordinates)	
 	end	
 
@@ -29,31 +35,35 @@ class Player
 
 	#Requesting coordinates to place ship
 
-	def request_coordinate_to_place_ship(ship)
-		loop do
-			coordinates = generate_coordinates(start_coordinate, end_coordinate)
-			break if valid_coordinates?(ship, coordinates)
-		end
+	def request_coordinate_to_place(ship)
+		coordinates = generate_coordinates(start_coordinate(ship), end_coordinate(ship))
+			until valid_coordinates?(ship, coordinates)
+				coordinates = generate_coordinates(start_coordinate(ship), end_coordinate(ship))
+			end
 		coordinates
 	end
 
-	def generate_coordinates(start_coordinate, end_coordinate)
-		coordinates = []
-		start_letter, start_number = letter(start_coordinate), number(start_coordinate)
-		end_letter, end_number = letter(end_coordinate), number(end_coordinate)
-		if start_letter == end_letter
-			for i in (start_number..end_number)
-				coordinates << (start_letter + i.to_s).to_sym
-			end
-		else
-			for i in (start_letter..end_letter)
-				coordinates << (i + start_number.to_s).to_sym
-			end
-		end
-		coordinates
+	def generate_coordinates(first, last)
+		first_letter,first_number = letter(first), number(first)
+		last_letter,last_number = letter(last), number(last)
+		
+		return fill_column(first_number, last_number, first_letter) if same_letters?(first_letter, last_letter)
+		fill_row(first_letter, last_letter, first_number)
 	end
 
-	def valid_coordinates?(ship,coordinates)
+	def fill_column(first_number, last_number, first_letter)
+		(first_number..last_number).to_a.map{ |number| (first_letter + number.to_s).to_sym}
+	end
+
+	def fill_row(first_letter, last_letter, first_number)
+		(first_letter..last_letter).to_a.map{ |letter| (letter + first_number.to_s).to_sym }
+	end
+
+	def same_letters?(first_letter, last_letter)
+		first_letter == last_letter
+	end
+
+	def valid_coordinates?(ship, coordinates)
 		return false unless all_coordinates_vacant?(coordinates)
 		return false unless have_shared_row_or_column?(coordinates)
 		return false unless coordinates.count == ship.shield_level
@@ -77,16 +87,15 @@ class Player
 	end
 
 	def vacant?(coordinate)
-		#Move to player class to implement properly?
-		true
+		grid.cell(coordinate).occupied? == false
 	end
 
-	def start_coordinate
+	def start_coordinate(ship)
 		puts "Enter coordinate to place start of #{ship.class}"
 		get_coordinate_from_user
 	end
 
-	def end_coordinate
+	def end_coordinate(ship)
 		puts "Enter coordinate to place end of #{ship.class}"
 		get_coordinate_from_user
 	end

@@ -40,7 +40,7 @@ class Game
 	def play_game
 		# loop do
 		# 	current_player.display_tracking_grid
-		# 	current_player.shoot_at(other_player.grid, request_coordinate_to_attack)
+		# 	current_player.shoot_at(other_player.grid, current_player.request_coordinate_to_attack)
 		# 	other_player.declare_sunk_ship #Need to add declare sunk ship method
 		# 	end_game if victory_declared
 		# 	change_turn
