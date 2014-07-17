@@ -28,8 +28,8 @@ class Game
 	end
 
 	def start_game
-		players[0].deploy_ships(ship_factory)
-		players[1].deploy_ships(ship_factory)
+		current_player.deploy_ships(ship_factory)
+		other_player.deploy_ships(ship_factory)
 		play_game
 	end
 
@@ -38,12 +38,28 @@ class Game
 	end
 
 	def play_game
-
+		loop do
+			current_player.shoot_at(other_player.grid, request_coordinate_to_attack)
+			# other_player.declare_sunk_ship #Need to add declare sunk ship method
+			end_game if victory_declared
+			change_turn
+		end
 	end
 
-	def declare_victory
-		return "player2 wins!" if players[0].grid.count_sunken_ships == 5
-		return "player1 wins!" if players[1].grid.count_sunken_ships == 5
+	def request_coordinate_to_attack
+		puts "Please enter a coordinate to attack (e.g a1):"
+		get_coordinate_from_user
+	end
+
+	def get_coordinate_from_user
+		gets.chomp.downcase.to_sym
+	end
+
+	def victory_declared
+		if other_player.grid.count_sunken_ships == 5
+			puts "Current player wins!" 
+			true
+		end
 	end
 
 	def end_game

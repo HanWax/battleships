@@ -53,10 +53,18 @@ describe Game do
 			expect(game.other_player).to be player1
 		end
 
+		it 'can request a coordinate to attack' do
+			msg = "Please enter a coordinate to attack (e.g a1):"
+			expect(STDOUT).to receive(:puts).with(msg)
+			expect(game).to receive(:get_coordinate_from_user).and_return("A1".downcase.to_sym)
+			expect(game.request_coordinate_to_attack).to eq :a1
+		end
+
 		it 'can declare victory' do
-			game.current_player = player1
-			game.other_player = player2
-			expect(game.declare_victory).to eq "player2 wins!"
+			game.other_player = player1
+			game.current_player = player2
+			expect(STDOUT).to receive(:puts).with("Current player wins!")
+			game.victory_declared
 		end
 
 		it 'can end the game' do
