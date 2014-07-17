@@ -7,7 +7,6 @@ describe Game do
 	let(:player2) { double :player2, :grid => grid2, :deploy_ships => nil	}
 	let(:grid1)  	{ double :grid1, :count_sunken_ships => 5 							}
 	let(:grid2)		{ double :grid2, :count_sunken_ships => 0 							}
-	let(:ship)		{ double :ship, :shield_level => 2											}
 
 	context 'At the start of the game' do
 	
@@ -54,26 +53,6 @@ describe Game do
 			expect(game.other_player).to be player1
 		end
 
-		it 'can request a coordinate to attack' do
-			msg = "Please enter a coordinate to attack (e.g a1):"
-			expect(STDOUT).to receive(:puts).with(msg)
-			expect(game).to receive(:get_coordinate_from_user).and_return("A1".downcase.to_sym)
-			expect(game.request_coordinate_to_attack).to eq :a1
-		end
-
-		it 'can generate a coordinate set from a start and end coordinate' do
-			expect(game.generate_coordinates("a1", "a3")).to eq [:a1, :a2, :a3]
-			expect(game.generate_coordinates("a1", "c1")).to eq [:a1, :b1, :c1]
-		end
-
-		it 'can check if coordinates are valid for a ship - number of coords' do
-			expect(game.valid_coordinates?(ship,[:a1, :a2, :a3] )).to be false
-		end
-
-		it 'can check if coordinates are valid for a ship - same row or column' do
-			expect(game.valid_coordinates?(ship,[:a1, :b2,] )).to be false
-			expect(game.valid_coordinates?(ship,[:a1, :a2,] )).to be true
-		end
 
 		it 'can declare victory' do
 			game.other_player = player1
