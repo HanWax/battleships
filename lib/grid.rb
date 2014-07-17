@@ -23,6 +23,10 @@ class Grid
 		cells[x][y]
 	end
 
+	# def display(all_cells)
+	# 	cell.map {|cell| cell.display}
+	# end
+
 	def attack_cell(grid_reference)
 		x, y = grid_reference_to_index(grid_reference)
 		cells[x][y] = cells[x][y].attack!
