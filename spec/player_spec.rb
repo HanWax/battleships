@@ -1,4 +1,4 @@
-grequire 'player'
+require 'player'
 
 
 	describe Player do 
