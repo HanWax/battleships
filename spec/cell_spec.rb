@@ -4,8 +4,9 @@ require 'ship'
 describe 'cell' do
 
 	let(:cell) 							{ Cell.new                				}
-	let(:ship)							{ double :ship, :attack! => nil			}
-	let(:occupied_cell)                 { cell.occupy_with(ship)			    }
+	let(:ship)							{ double :ship, :attack! => nil		}
+	let(:occupied_cell)     { cell.occupy_with(ship)			    }
+
 
 	before(:each) do
 		allow(STDOUT).to receive(:puts)
