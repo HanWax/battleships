@@ -15,17 +15,13 @@ class Grid
 	#Context: cells in the grid
 
 	def create_cells
-		Array.new(size) { Array.new(size) { Cell.new } }
+		Array.new(size) { Array.new(size) { OpponentCell.new } }
 	end
 
 	def cell(grid_reference)
 		x, y = grid_reference_to_index(grid_reference)
 		cells[x][y]
 	end
-
-	# def display(all_cells)
-	# 	cell.map {|cell| cell.display}
-	# end
 
 	def attack_cell(grid_reference)
 		x, y = grid_reference_to_index(grid_reference)

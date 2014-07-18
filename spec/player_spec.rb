@@ -1,4 +1,4 @@
-require 'player'
+grequire 'player'
 
 
 	describe Player do 
@@ -25,12 +25,6 @@ require 'player'
 			player.deploy_ships([ship, destroyer])
 		end
 
-	end
-
-	context 'Display grids' do
-		it "should display the grid" do
-			
-		end
 	end
 
 	context 'During the game' do

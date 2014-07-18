@@ -102,6 +102,14 @@ class Player
 		get_coordinate_from_user
 	end
 
+	#Grid user interface
+
+	def display_grid
+		content = grid.cells.map{|row|row.map{|cell| cell.display}}
+		table = Terminal::Table.new rows: content
+		puts table
+	end
+
 end
 
 def letter(coordinate)
@@ -112,10 +120,5 @@ def number(coordinate)
 	coordinate[1..2].to_i
 end
 
-#Grid user interface
 
-def display_grid
-	content = grid.cells.map{|row|row.map{|cell| cell.display}}
-	table = Terminal::Table.new rows: content
-	puts table
-end
+

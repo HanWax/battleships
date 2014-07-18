@@ -3,9 +3,9 @@ require 'ship'
 
 describe 'cell' do
 
-	let(:cell) 							{ Cell.new                						}
-	let(:ship)							{ double :ship, :attack! => nil				}
-	let(:occupied_cell)     { cell.occupy_with(ship)							}
+	let(:cell) 							{ Cell.new                				}
+	let(:ship)							{ double :ship, :attack! => nil			}
+	let(:occupied_cell)                 { cell.occupy_with(ship)			    }
 
 	it 'should not be occupied when created' do
 		expect(cell).not_to be_occupied
