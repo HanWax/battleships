@@ -76,6 +76,10 @@ require 'player'
 			expect(player.valid_coordinates?(ship,[:a1, :a2,] )).to be false
 		end
 
+		it 'should check if coordinates are valid - belong to grid' do
+			expect(player.valid_coordinates?(ship, [:j11, :j12])).to be false
+		end
+
 		it ' can request a start_coordinate' do
 			msg = "Enter coordinate to place start of #{ship.class}"
 			expect(STDOUT).to receive(:puts).with(msg)

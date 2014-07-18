@@ -66,10 +66,22 @@ class Player
 	end
 
 	def valid_coordinates?(ship, coordinates)
+		return false unless on_grid?(coordinates)
 		return false unless all_coordinates_vacant?(coordinates)
 		return false unless have_shared_row_or_column?(coordinates)
-		return false unless coordinates.count == ship.shield_level
+		return false unless correct_number_of?(coordinates, ship)
 		true
+	end
+
+	def on_grid?(coordinates)
+		coordinates.each { |coordinate| grid.cell(coordinate) }
+		true
+	rescue
+		false
+	end
+
+	def correct_number_of?(coordinates, ship)
+		coordinates.count == ship.shield_level
 	end
 
 	def have_shared_row_or_column?(coordinates)
@@ -98,7 +110,7 @@ class Player
 	end
 
 	def end_coordinate(ship)
-		puts "Enter coordinate to place end of #{ship.class}"
+		puts "Enter coordinate to place end of #{ship.class} that spans #{ship.shield_level} cells"
 		get_coordinate_from_user
 	end
 

@@ -7,6 +7,10 @@ describe 'cell' do
 	let(:ship)							{ double :ship, :attack! => nil				}
 	let(:occupied_cell)     { cell.occupy_with(ship)							}
 
+	before(:each) do
+		allow(STDOUT).to receive(:puts)
+	end
+
 	it 'should not be occupied when created' do
 		expect(cell).not_to be_occupied
 	end
@@ -28,6 +32,16 @@ describe 'cell' do
 
 	it 'can register hit' do
 		expect(occupied_cell.attack!).to be_an_instance_of Hit
+	end
+
+	it 'prints a hit result to screen' do
+		expect(STDOUT).to receive(:puts).with("HIT")
+		occupied_cell.attack!
+	end
+
+	it 'prints a miss result to screen' do
+		expect(STDOUT).to receive(:puts).with("MISS")
+		cell.attack!
 	end
 
 	it 'should display ~ if occupied by water' do

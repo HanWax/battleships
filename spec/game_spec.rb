@@ -40,6 +40,8 @@ describe Game do
 			game.other_player = player2
 			expect(player1).to receive(:deploy_ships)
 			expect(player2).to receive(:deploy_ships)
+			expect(STDOUT).to receive(:puts).exactly(3).times
+			expect(game).to receive(:play_game)
 			game.start_game
 		end
 
@@ -49,6 +51,7 @@ describe Game do
 
 		it 'can change turns' do
 			player1 = game.current_player
+			expect(STDOUT).to receive(:puts).with("Next player")
 			game.change_turn
 			expect(game.other_player).to be player1
 		end
@@ -64,6 +67,14 @@ describe Game do
 		it 'can end the game' do
 			expect(STDOUT).to receive(:puts).with("----GAME OVER----")
 			expect { game.end_game }.to raise_exception(SystemExit)
+		end
+
+		it 'can stop a player attacking the same cell twice' do
+			player = game.current_player
+			expect(player).to receive(:shoot_at).and_return(RuntimeError)
+			expect(player).to receive(:request_coordinate_to_attack)
+			expect(STDOUT).to receive(:puts)
+			game.play_turn
 		end
 
 	end

@@ -7,6 +7,10 @@ let(:weak_ship) { Ship.new(1) 																	}
 let(:cell)			{ double :cell, :occupy_with => nil 						}
 let(:grid)			{ double :grid, :cell => cell, :add_ship => nil }
 
+before(:each) do
+	allow(STDOUT).to receive(:puts)
+end
+
 context ''
 
 	it 'should not be sunk when created' do 

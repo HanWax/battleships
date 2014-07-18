@@ -28,22 +28,46 @@ class Game
 	end
 
 	def start_game
+		print_player1_prompt
 		current_player.deploy_ships(ship_factory)
+		print_player2_prompt
 		other_player.deploy_ships(ship_factory)
+		print_start_message
 		play_game
+	end
+
+	def print_start_message
+		puts "----START----"
+	end
+
+	def print_player1_prompt
+		puts "Player 1 Start"
+	end
+
+	def print_player2_prompt
+		puts "Player 2 Start"
 	end
 
 	def change_turn
 		@current_player, @other_player = @other_player, @current_player
+		puts "Next player"
 	end
 
 	def play_game
-		# loop do
-		# 	current_player.display_tracking_grid
-		# 	current_player.shoot_at(other_player.grid, current_player.request_coordinate_to_attack)
-		# 	end_game if victory_declared
-		# 	change_turn
-		# end
+		loop do
+			play_turn
+		end
+	end
+
+	def play_turn
+		begin
+			# current_player.display_tracking_grid
+			current_player.shoot_at(other_player.grid, current_player.request_coordinate_to_attack)
+			end_game if victory_declared
+			change_turn
+		rescue RuntimeError => error
+			puts error.message
+		end
 	end
 
 	def victory_declared

@@ -25,7 +25,17 @@ class Cell
 
 	def attack!
 		@occupier.attack!
-		return Hit.new if occupied?
+		return score_hit if occupied?
+		score_miss
+	end
+
+	def score_hit
+		puts "HIT"
+		return Hit.new
+	end
+
+	def score_miss
+		puts "MISS"
 		Miss.new
 	end
 	
@@ -33,4 +43,5 @@ class Cell
 		return '@' if occupied? 
 		'~'
 	end
+	
 end
