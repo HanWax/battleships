@@ -4,7 +4,7 @@ require './lib/hit'
 require './lib/miss'
 
 
-class Cell
+class Cell 
 
 	DEFAULT_REFERENCE = nil
 
