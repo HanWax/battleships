@@ -9,7 +9,6 @@ Scenario: Registering
 	Then I should see "What's your name?"
 
 
-	#But I should not see "Welcome Charlotte. Let's play!"
-	#And I fill in "name" with "Charlotte"
-	#And I press "Start Battleships!"
-	#Then I should see "Welcome Charlotte. Let's play!"
+	And I fill in "name" with "Charlotte"
+	And I press button to "Start Battleships!"
+	Then I should see "Welcome Charlotte. Let's play!"
