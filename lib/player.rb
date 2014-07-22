@@ -1,13 +1,14 @@
 require './lib/grid'
 require './lib/cell'
-require 'terminal-table'
+
 
 class Player
 
-	attr_accessor :grid
+	attr_accessor :grid, :name
 
 	def initialize
 		@grid = Grid.new(size: 10)
+		@name = name
 	end
 
 	def deploy_ships(ships)
@@ -116,11 +117,11 @@ class Player
 
 	#Grid user interface
 
-	def display_grid
-		content = grid.cells.map{|row|row.map{|cell| cell.display}}
-		table = Terminal::Table.new rows: content
-		puts table
-	end
+	# def display_grid
+	# 	content = grid.cells.map{|row|row.map{|cell| cell.display}}
+	# 	table = Terminal::Table.new rows: content
+	# 	puts table
+	# end
 
 end
 
