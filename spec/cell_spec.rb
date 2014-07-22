@@ -1,56 +1,55 @@
-require 'cell'
-require 'ship'
+require './lib/cell' 
 
-describe 'cell' do
+describe Cell do
 
-	let(:cell) 							{ Cell.new                				}
-	let(:ship)							{ double :ship, :attack! => nil		}
-	let(:occupied_cell)     { cell.occupy_with(ship)			    }
+	let(:water)           { double :water,  class: Water }
+	let(:ship)            { double :ship, class: Ship    }
+	let(:cell_with_water) { Cell.new(water)              }
+	let(:cell_with_ship)  { Cell.new(ship)               }
 
-
-	before(:each) do
-		allow(STDOUT).to receive(:puts)
+	it 'has some content' do
+		expect(cell_with_water.content).to eq water
 	end
 
-	it 'should not be occupied when created' do
-		expect(cell).not_to be_occupied
+	it 'can have the content changed' do
+		cell_with_water.content = :ship
+		expect(cell_with_water.content).to eq :ship
 	end
 
-	it 'can be occupied by a ship' do
-		cell.occupy_with(:ship)
-		expect(cell).to be_occupied 
-		expect(cell.occupier).to eq(:ship)
+	it 'is not shot when created' do
+		expect(cell_with_water.shot_at?).to be false
 	end
 
-	it 'hits the occupier when the cell is hit' do 
-		expect(cell.occupier).to receive(:attack!)
-		cell.attack!
-	end 
-
-	it 'can register miss' do
-		expect(cell.attack!).to be_an_instance_of Miss
+	it 'can be shot at' do
+		expect(cell_with_ship.content).to receive(:hit!)
+		cell_with_ship.shoot!
+		expect(cell_with_ship).to be_shot_at
 	end
 
-	it 'can register hit' do
-		expect(occupied_cell.attack!).to be_an_instance_of Hit
-	end
+	context 'to string' do
 
-	it 'prints a hit result to screen' do
-		expect(STDOUT).to receive(:puts).with("HIT")
-		occupied_cell.attack!
-	end
+		before(:each) do
+			allow(Ship).to receive(:superclass).and_return(Ship)
+		end
 
-	it 'prints a miss result to screen' do
-		expect(STDOUT).to receive(:puts).with("MISS")
-		cell.attack!
-	end
+		it 'returns " " if water here and not shot at' do
+			expect(cell_with_water.status).to eq ' '
+		end
 
-	it 'should display ~ if occupied by water' do
-		expect(cell.display).to eq('~')
-	end
+		it 'returns "S" if ship here' do
+			expect(cell_with_ship.status).to eq 'S'
+		end
 
-	it 'should display @ if occupied by a ship' do
-		expect(occupied_cell.display).to eq('@') 
-	end
+		it 'returns "O" if water here and shot at' do
+			allow(water).to receive(:hit!)
+			cell_with_water.shoot!
+			expect(cell_with_water.status).to eq 'O'
+		end
 
+		it 'returns "X" if damaged ship here' do
+			allow(ship).to receive(:hit!)
+			cell_with_ship.shoot!
+			expect(cell_with_ship.status).to eq 'X'
+		end
+	end
 end

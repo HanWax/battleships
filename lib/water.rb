@@ -1,7 +1,7 @@
 class Water
 
-	def attack!
-		self
+	def hit!
+		puts 'Splash'
 	end
-	
-end
+
+end	

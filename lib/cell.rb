@@ -1,47 +1,38 @@
-require './lib/water'
-require './lib/attacked_cell'
-require './lib/hit'
-require './lib/miss'
+class Cell
 
-
-class Cell 
-
-	DEFAULT_REFERENCE = nil
-
-	attr_accessor :occupier
-
-	def initialize
-		@occupier = Water.new 
+	def initialize(content)
+		@content = content
+		@shot_at = false
 	end
 
-	def occupied?
-		!@occupier.is_a?(Water)
+	attr_accessor :content
+
+	def shot_at?
+		@shot_at
 	end
 
-	def occupy_with(ship)
-		@occupier = ship
-		self
+	def shoot!
+		@shot_at = true
+		@content.hit!	
 	end
 
-	def attack!
-		@occupier.attack!
-		return score_hit if occupied?
-		score_miss
+	def status
+		return 'X' if part_of_damaged_ship_here?
+		return 'S' if part_of_ship_here?
+		return ' ' if water_here? && !shot_at?
+		return 'O' if water_here?
 	end
 
-	def score_hit
-		puts "HIT"
-		return Hit.new
+	def water_here?
+		content.class == Water
 	end
 
-	def score_miss
-		puts "MISS"
-		Miss.new
+	def part_of_ship_here?
+		content.class.superclass == Ship
 	end
-	
-	def display
-		return '@' if occupied? 
-		'~'
+
+	def part_of_damaged_ship_here?
+		part_of_ship_here? && shot_at?
 	end
-	
+
 end

@@ -1,85 +1,57 @@
-require './lib/player'
-require './lib/ship'
+require './files'
 
 class Game
 
-	attr_accessor :current_player, :other_player
-
-	def initialize
-			@current_player = player_factory
-			@other_player = player_factory
+	def initialize(player_one: :player_one, player_two: :player_two)
+		@player_one = player_one
+		@player_two = player_two
 	end
 
-	def players
-		[@current_player, @other_player]
-	end
+	attr_reader :player_one, :player_two
 
-	def player_factory
-		Player.new
-	end
-
-	def ship_factory
-		[ AircraftCarrier.new,
-			Battleship.new,
-			Destroyer.new,
-			Submarine.new,
-			PatrolBoat.new
-		]
-	end
-
-	def start_game
-		print_player1_prompt
-		current_player.deploy_ships(ship_factory)
-		print_player2_prompt
-		other_player.deploy_ships(ship_factory)
-		print_start_message
-		play_game
-	end
-
-	def print_start_message
-		puts "----START----"
-	end
-
-	def print_player1_prompt
-		puts "Player 1 Start"
-	end
-
-	def print_player2_prompt
-		puts "Player 2 Start"
-	end
-
-	def change_turn
-		@current_player, @other_player = @other_player, @current_player
-		puts "Next player"
-	end
-
-	def play_game
-		loop do
-			play_turn
+	def deploy_ships_for(player)
+		until player.ships_to_deploy.empty?
+			player.board.nice_display
+			ship_to_be_deployed = player.ships_to_deploy.pop
+			puts "#{player.name}! Where do you want to deploy your #{ship_to_be_deployed.class.to_s}, which is #{ship_to_be_deployed.remaining_hits} squares long?"
+			at_coordinates = get_coordinates_from_player			
+			while at_coordinates.locations.length != ship_to_be_deployed.remaining_hits || !at_coordinates.valid? || at_coordinates.locations.any?{|location| player.board.grid[location].part_of_ship_here? }
+				puts "Be careful! The ship is #{ship_to_be_deployed.remaining_hits} long,the coordinates have to be sequential and you must not have ships on top of eachother!!" 
+				at_coordinates = get_coordinates_from_player
+			end
+			player.board.place(ship_to_be_deployed, at_coordinates)
 		end
 	end
 
-	def play_turn
-		begin
-			# current_player.display_tracking_grid
-			current_player.shoot_at(other_player.grid, current_player.request_coordinate_to_attack)
-			end_game if victory_declared
-			change_turn
-		rescue RuntimeError => error
-			puts error.message
+	def has_ships_floating?(player)
+		player.board.grid.values.any?{|cell| cell.status == 'S'}
+	end
+
+	def fight!
+		deploy_ships_for(player_one)
+		puts "Player #{player_one.name}! You finished deploying your ships! "
+		puts "Hit return when you(#{player_two.name}) want to begin deploying your ships!"
+		gets
+		deploy_ships_for(player_two)
+		puts "Player #{player_two.name}! You finished deploying your ships! "
+		puts "The Game will begin NOW!!! Hit return when ready!!"
+		gets
+		while has_ships_floating?(player_one) || has_ships_floating?(player_two)
+			puts "#{player_one.name}! Where do you want to shoot?"
+			at_location = gets.chomp
+			player_one.shoot_at(player_two.board, at_location)
+			puts "#{player_two.name} turn to shoot! Hit return when ready!"
+			gets
+			puts "#{player_two.name}! Where do you want to shoot?"
+			at_location = gets.chomp
+			player_two.shoot_at(player_one.board, at_location)
 		end
 	end
 
-	def victory_declared
-		if other_player.grid.count_sunken_ships == 5
-			puts "Current player wins!" 
-			true
-		end
-	end
+	private
 
-	def end_game
-		puts "----GAME OVER----"
-		exit
+	def get_coordinates_from_player
+		Coordinates.new(gets.chomp.split)
 	end
 
 end

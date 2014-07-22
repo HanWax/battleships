@@ -1,5 +1,5 @@
 require 'sinatra/base'
-require './lib/load_files.rb'
+
 
 class Battleships < Sinatra::Base
   
@@ -12,10 +12,10 @@ class Battleships < Sinatra::Base
 	end
 
 	post '/startgame' do
-		game = Game.new
-		game.players[0].name = params[:name1]
-		game.players[0].name = params[:name2]
-		game.start_game
+		
+		@name1= params[:name1]
+		@name2 = params[:name2]
+		
 			erb :startgame
 	end
 

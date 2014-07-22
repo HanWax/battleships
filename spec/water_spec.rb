@@ -1,9 +1,8 @@
-require 'water'
+require './lib/water'
 
-describe Water do 
-	it 'should return self when attacked' do 
+describe Water do
+	it 'is splashed when shot at' do
 		water = Water.new
-		expect(water.attack!).to eq(water)
-	end 
-
-end 
+		expect(water.hit!).to eq 'Splash'
+	end
+end

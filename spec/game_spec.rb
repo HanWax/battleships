@@ -1,82 +1,73 @@
-require 'game'
+require './lib/game'
 
 describe Game do
 
-	let(:game) 		{ Game.new																							}
-	let(:player1) { double :player1, :grid => grid1, :deploy_ships => nil	}
-	let(:player2) { double :player2, :grid => grid2, :deploy_ships => nil	}
-	let(:grid1)  	{ double :grid1, :count_sunken_ships => 5 							}
-	let(:grid2)		{ double :grid2, :count_sunken_ships => 0 							}
+	let(:player_one) { Player.new(name: 'PlayerOne', board: Board.new(content: Water.new)) }
+	let(:player_two) { Player.new(name: 'PlayerOne', board: Board.new(content: Water.new)) }
+	let(:game)       { Game.new(player_one: player_one, player_two: player_two)            }
 
-	context 'At the start of the game' do
-	
-		it 'should start with 2 instances of the player class' do
-			expect(game.players[0]).to be_an_instance_of Player
-			expect(game.players[1]).to be_an_instance_of Player
-		end
-
-		it 'should know which is the current player' do
-			expect(game.current_player).to be game.players[0]
-		end
-
-		it 'should know which is the other player' do
-			expect(game.other_player).to be game.players[1]
-		end
-		
-		it 'can make an array of ships' do
-			expect(game.ship_factory).to be_an_instance_of Array
-		end
-
-		it 'can fill the array with ships' do
-			expect(game.ship_factory[0]).to be_an_instance_of AircraftCarrier
-			expect(game.ship_factory[1]).to be_an_instance_of Battleship
-			expect(game.ship_factory[2]).to be_an_instance_of Destroyer
-			expect(game.ship_factory[3]).to be_an_instance_of Submarine
-			expect(game.ship_factory[4]).to be_an_instance_of PatrolBoat
-		end
-
-		it 'can start the game' do
-			game.current_player = player1
-			game.other_player = player2
-			expect(player1).to receive(:deploy_ships)
-			expect(player2).to receive(:deploy_ships)
-			expect(STDOUT).to receive(:puts).exactly(3).times
-			expect(game).to receive(:play_game)
-			game.start_game
-		end
-
+	it 'is initialized with two players' do
+		expect(game.player_one).to eq player_one
+		expect(game.player_two).to eq player_two
 	end
 
-	context 'In round n' do 
-
-		it 'can change turns' do
-			player1 = game.current_player
-			expect(STDOUT).to receive(:puts).with("Next player")
-			game.change_turn
-			expect(game.other_player).to be player1
+	context 'deploying the ships' do
+		it 'a player to deploy it\'s ships' do
+			allow(game).to receive(:gets).and_return('A1 A2 A3 A4 A5 A6',
+																								 'D4 D5 D6 D7 D8',
+																								 'E2 F2 G2 H2',
+																								 'F4 G4 H4',
+																								 'J3 J4')
+			game.deploy_ships_for(player_one)
+			expect(player_one.ships_to_deploy).to eq []
 		end
 
-
-		it 'can declare victory' do
-			game.other_player = player1
-			game.current_player = player2
-			expect(STDOUT).to receive(:puts).with("Current player wins!")
-			game.victory_declared
+		it 'will not allow to deploy ships, unless it is done properly :)' do
+			expect(STDOUT).to receive(:puts).exactly(6).times.and_return("Be careful! The ship is 5 long,the coordinates have to be sequential and you must not have ships on top of eachother!!" )
+			allow(game).to receive(:gets).and_return('A1 A2 A3 A4 A5 A6',
+																								'A1 B1 C1 D1 E1',	
+																								'D4 D5 D6 D7 D8',
+																							  'E2 F2 G2 H2',
+																								'F4 G4 H4',
+																								'J3 J4')
+			game.deploy_ships_for(player_one)
+			expect(player_one.ships_to_deploy).to eq []
 		end
+ 	end
 
-		it 'can end the game' do
-			expect(STDOUT).to receive(:puts).with("----GAME OVER----")
-			expect { game.end_game }.to raise_exception(SystemExit)
-		end
+ 	context 'playing' do
+ 		it 'knows when a player has no more ships floating' do
+ 			allow(game).to receive(:gets).and_return('A1 A2 A3 A4 A5 A6',
+																								 'D4 D5 D6 D7 D8',
+																								 'E2 F2 G2 H2',
+																								 'F4 G4 H4',
+																								 'J3 J4')
+			game.deploy_ships_for(player_one)
 
-		it 'can stop a player attacking the same cell twice' do
-			player = game.current_player
-			expect(player).to receive(:shoot_at).and_return(RuntimeError)
-			expect(player).to receive(:request_coordinate_to_attack)
-			expect(STDOUT).to receive(:puts)
-			game.play_turn
-		end
+			expect(game.has_ships_floating?(player_one)).to be true
 
-	end
+			player_two.shoot_at(player_one.board, 'A1')
+			player_two.shoot_at(player_one.board, 'A2')
+			player_two.shoot_at(player_one.board, 'A3')
+			player_two.shoot_at(player_one.board, 'A4')
+			player_two.shoot_at(player_one.board, 'A5')
+			player_two.shoot_at(player_one.board, 'A6')
+			player_two.shoot_at(player_one.board, 'D4')
+			player_two.shoot_at(player_one.board, 'D5')
+			player_two.shoot_at(player_one.board, 'D6')
+			player_two.shoot_at(player_one.board, 'D7')
+			player_two.shoot_at(player_one.board, 'D8')
+			player_two.shoot_at(player_one.board, 'E2')
+			player_two.shoot_at(player_one.board, 'F2')
+			player_two.shoot_at(player_one.board, 'G2')
+			player_two.shoot_at(player_one.board, 'H2')
+			player_two.shoot_at(player_one.board, 'F4')
+			player_two.shoot_at(player_one.board, 'G4')
+			player_two.shoot_at(player_one.board, 'H4')
+			player_two.shoot_at(player_one.board, 'J3')
+			player_two.shoot_at(player_one.board, 'J4')
 
+			expect(game.has_ships_floating?(player_one)).to be false
+ 		end
+ 	end 
 end
