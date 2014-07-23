@@ -17,3 +17,7 @@ end
 Then(/^I press button to "(.*?)"$/) do |button|
   click_button(button)
 end
+
+Given(/^I have started a game with "(.*?)" and "(.*?)"$/) do |name1, name2|
+  visit '/startgame/name1:Charlotte/name2:Nikesh'
+end

@@ -2,12 +2,24 @@ require './files'
 
 class Game
 
-	def initialize(player_one: :player_one, player_two: :player_two)
-		@player_one = player_one
-		@player_two = player_two
+	def initialize
+		@players = []
 	end
 
-	attr_reader :player_one, :player_two
+	attr_reader :players
+
+	def create_player player
+		@players << player
+	 end
+
+	def ready_to_start?
+		players.count == 2
+	end
+
+	def restart
+		@players = []
+	end
+	
 
 	def deploy_ships_for(player)
 		until player.ships_to_deploy.empty?
@@ -28,23 +40,23 @@ class Game
 	end
 
 	def fight!
-		deploy_ships_for(player_one)
-		puts "Player #{player_one.name}! You finished deploying your ships! "
-		puts "Hit return when you(#{player_two.name}) want to begin deploying your ships!"
+		deploy_ships_for(player[0])
+		puts "Player #{player[0].name}! You finished deploying your ships! "
+		puts "Hit return when you(#{player[1].name}) want to begin deploying your ships!"
 		gets
-		deploy_ships_for(player_two)
-		puts "Player #{player_two.name}! You finished deploying your ships! "
+		deploy_ships_for(player[1])
+		puts "Player #{player[1].name}! You finished deploying your ships! "
 		puts "The Game will begin NOW!!! Hit return when ready!!"
 		gets
-		while has_ships_floating?(player_one) || has_ships_floating?(player_two)
-			puts "#{player_one.name}! Where do you want to shoot?"
+		while has_ships_floating?(player[0]) || has_ships_floating?(player[1])
+			puts "#{player[0].name}! Where do you want to shoot?"
 			at_location = gets.chomp
-			player_one.shoot_at(player_two.board, at_location)
-			puts "#{player_two.name} turn to shoot! Hit return when ready!"
+			player[0].shoot_at(player[1].board, at_location)
+			puts "#{player[1].name} turn to shoot! Hit return when ready!"
 			gets
-			puts "#{player_two.name}! Where do you want to shoot?"
+			puts "#{player[1].name}! Where do you want to shoot?"
 			at_location = gets.chomp
-			player_two.shoot_at(player_one.board, at_location)
+			player[1].shoot_at(player[0].board, at_location)
 		end
 	end
 
