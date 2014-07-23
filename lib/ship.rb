@@ -1,5 +1,7 @@
 class Ship
 
+	attr_reader :name
+
 	def initialize(size)
 		@remaining_hits = size
 	end
@@ -23,29 +25,34 @@ end
 class PatrolBoat < Ship
 	def initialize
 		super 2
+		@name = "Patrol Boat"
 	end
 end
 
 class Submarine < Ship
 	def initialize
 		super 3
+		@name = "Submarine"
 	end
 end
 
 class Destroyer < Ship
 	def initialize
 		super 4
+		@name = "Destroyer"
 	end
 end
 
 class Battleship < Ship
 	def initialize
 		super 5
+		@name = "Battleship"
 	end
 end
 
 class Carrier < Ship
 	def initialize
 		super 6
+		@name = "Aircraft Carrier"
 	end
 end

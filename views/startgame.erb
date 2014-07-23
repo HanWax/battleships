@@ -2,8 +2,10 @@
 
 	<body>
 		<h1> Startgame </h1>
-		<%= @name1 %>
-		<%= @name2 %>
+		<p> <%= @name1 %>: place your ships!</p>
+		<form action ="/placeship" method="post" >
+			Location: <input type="text" location="location">
+
 	</body>
 
 </html>
