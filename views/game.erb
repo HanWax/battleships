@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<body>
+	<h1>Give your coordinates</h1>
+	<table>
+<% session[:Player_1].board.render_display.each do |row| %>
+<tr>[_]
+<% row.each do |col| %>
+<td>[_]<%= col %></td>
+<% end %>
+</tr>
+<% end %>
+</table>
+<form action='/place' method='post'>
+	<br>
+	<% @ship %>
+
+	<div>	
+		<h4><% @ship.class.to_s %></h4>
+		<% (@ship.remaining_hits).times do %>
+			<input type="text" name="coordinate[]" placeholder="Type coordinate" required></input>
+		<% end %>
+		<input type='submit' text='Place'>
+	</div>
+
+	</form>
+	</body>
+</html>
